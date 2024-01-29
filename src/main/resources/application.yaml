@@ -1,0 +1,42 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: hmdp
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/hmdp?useSSL=false&serverTimezone=UTC
+    username: root
+    password: 528326521
+      # HikariCP 自定义配置，对应 HikariConfig 配置属性类
+    hikari:
+      minimum-idle: 10 # 池中维护的最小空闲连接数.
+      maximum-pool-size: 20 # 池中最大连接数.
+      connection-timeout: 30000        # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 默认:30秒
+      idle-timeout: 600000             # 连接超时的最大时长（毫秒），超时则被释放（retired），默认:10分钟
+      pool-name: DateSourceHikariCP     # 连接池名字
+      connection-test-query: SELECT 1   # 连接测试语句
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+#    timeout: 200s
+#    password: 123321
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 5
+        min-idle: 1
+        max-wait: 10000
+#        time-between-eviction-runs: 10s
+      cluster:
+        refresh:
+          adaptive: true
+          period: 60s
+  jackson:
+    default-property-inclusion: non_null # JSON处理时忽略非空字段
+mybatis-plus:
+  type-aliases-package: com.hmdp.entity # 别名扫描包
+logging:
+  level:
+    com.hmdp: debug
