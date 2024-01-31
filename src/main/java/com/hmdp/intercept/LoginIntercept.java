@@ -1,5 +1,6 @@
 package com.hmdp.intercept;
 
+import com.hmdp.config.MyData;
 import com.hmdp.dto.UserDTO;
 import com.hmdp.utils.RedisConstants;
 import com.hmdp.utils.UserHolder;
@@ -23,6 +24,11 @@ public class LoginIntercept implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("LoginIntercept afterCompletion:{}",2);
+
+        if(MyData.isNotLogin) {  //是否免登录
+            return true;
+        }
+
         UserDTO user = UserHolder.getUser();
         if (user==null) {
             response.setStatus(401);
