@@ -23,4 +23,12 @@ class HmDianPingApplicationTests {
     }
 
 
+    @Test
+    public  void getJSONTest(){
+        User createTime = (User)redisTemplate.opsForValue().get("createTime");
+        System.out.println(createTime);
+    }
+
+
+
 }
